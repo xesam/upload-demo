@@ -1,0 +1,21 @@
+{
+  "name": "upload-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "1.19.0",
+    "express": "4.17.1",
+    "form-data": "3.0.0",
+    "formidable": "^1.2.2"
+  },
+  "devDependencies": {
+    "form-data": "3.0.0",
+    "axios": "0.19.2"
+  }
+}

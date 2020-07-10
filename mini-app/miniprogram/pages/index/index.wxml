@@ -1,0 +1,10 @@
+<view>
+    <view>
+        <text>使用wx.uploadFile上传单张图片</text>
+        <button bind:tap="onTapWxUpload">选择图片上传</button>
+    </view>
+    <view>
+        <text>使用wx.request上传多张图片</text>
+        <button bind:tap="onTapRequestUpload">选择图片上传</button>
+    </view>
+</view>

@@ -1,0 +1,117 @@
+<html>
+
+<head>
+    <style>
+        form > div {
+            padding: 12px 24px;
+        }
+
+        form > div label {
+            display: inline-block;
+            box-sizing: border-box;
+            width: 200px;
+            padding-right: 12px;
+            text-align: right;
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        form > div > input {
+            min-height: 36px;
+        }
+
+        form > div > div {
+            display: inline-flex;
+            flex-direction: column;
+        }
+
+        form > div > div input[type='file'] {
+            margin-top: 12px;
+        }
+
+        form > div:last-child {
+            margin-left: 200px;
+        }
+
+        form > div:last-child input {
+            color: white;
+            font-size: 20px;
+            padding: 12px 24px;
+        }
+
+        form > div:last-child input:first-child {
+            background: steelblue;
+        }
+
+        form > div:last-child input:last-child {
+            background: teal;
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    <h2>Form</h2>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <div>
+            <label for="name">name:</label><input id="name" name="name" value="xiao"/>
+        </div>
+        <div>
+            <label for="age">age:</label><input id="age" name="age" value="18"/>
+        </div>
+        <div>
+            <label>single file:</label>
+            <div>
+                <input type="file" name="single"/>
+            </div>
+        </div>
+        <div>
+            <label>multiple files:</label>
+            <div>
+                <input type="file" name="multiple" multiple/>
+            </div>
+        </div>
+        <div>
+            <label>duplicate:</label>
+            <div>
+                <input type="file" name="duplicate"/>
+                <input type="file" name="duplicate"/>
+                <input type="file" name="duplicate"/>
+            </div>
+        </div>
+        <div>
+            <input type="submit" value="Form Submit"/>
+            <input type="submit" value="Ajax Submit" id="ajax_submit"/>
+        </div>
+    </form>
+</div>
+<script>
+    document.getElementById('ajax_submit').addEventListener('click', e => {
+        e.preventDefault();
+        const formData = new FormData();
+
+        formData.append("name", document.getElementsByName('name')[0].value);
+        formData.append("age", document.getElementsByName('age')[0].value);
+        Array.from(document.getElementsByName('single')).forEach(fileElement => {
+            if (fileElement.files[0]) {
+                formData.append("single", fileElement.files[0]);
+            }
+        });
+        Array.from(document.getElementsByName('multiple')[0].files).forEach(file => {
+            formData.append("multiple", file);
+        });
+        Array.from(document.getElementsByName('duplicate')).forEach(fileElement => {
+            if (fileElement.files[0]) {
+                formData.append("duplicate", fileElement.files[0]);
+            }
+        });
+        fetch('/upload', {
+            method: "POST",
+            headers: {},
+            body: formData
+        }).then(response => response.json()).then(res => console.log(res)).catch(err => console.error(err));
+    }, false);
+</script>
+</body>
+
+</html>

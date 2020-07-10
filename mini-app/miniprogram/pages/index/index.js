@@ -27,5 +27,18 @@ Page({
         })
     },
     onTapRequestUpload() {
+        wx.chooseImage({
+            success(res) {
+                const tempFilePaths = res.tempFilePaths
+                console.log(tempFilePaths);
+                const fs = wx.getFileSystemManager();
+                fs.readFile({
+                    filePath: tempFilePaths[0],
+                    success(res) {
+                        console.log(res.data.byteLength);
+                    }
+                })
+            }
+        })
     }
 })
